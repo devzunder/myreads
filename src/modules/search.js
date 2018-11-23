@@ -6,6 +6,9 @@ export default class Search extends Component {
 
 handleChange = event => {  
   this.props.search(event.target.value)
+  if (event.target.value === "") {
+    this.props.clear()
+  }
 }
 
   render(){
@@ -21,7 +24,7 @@ handleChange = event => {
       <div className="search-books-results">
         <ol className="books-grid">
           {Books.map( book =>(
-          <Book book={book} changeShelf={this.props.changeShelf} />))}
+          <Book book={book} key={book.id} changeShelf={this.props.changeShelf} />))}
         </ol>
       </div>
       </div>

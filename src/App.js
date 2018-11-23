@@ -9,58 +9,62 @@ import './App.css';
 
 export default class BooksApp extends Component {
 
-state = {
-  queryBooks : [],
-  books:[]
-}
+  state = {
+    queryBooks : [],
+    books:[]
+  }
 
-
-componentDidMount(){
-  BooksAPI.getAll().then(
-    success => {
-      this.setState({
-        books: success
-      })
-    }
-  )
-};
-
-search = (query) =>{
-  if (query) {
-    BooksAPI.search(query).then(
+  componentDidMount(){
+    BooksAPI.getAll().then(
       success => {
-        if (Array.isArray(success)=== true) {
-          this.setState({queryBooks: success})
-        }else{
-          this.setState({queryBooks: []})
-        }
+        this.setState({
+          books: success
+        })
       }
     )
-  }else {
-  this.setState({queryBooks: []})
-  }
-};
+  };
 
-changeShelf = (book, shelf) =>{
-  BooksAPI.update(book, shelf).then(
-    update => {
-      swal({
-      position: 'bottom-end',
-      type: 'success',
-      title: 'Livro movido com sucesso!',
-      showConfirmButton: false,
-      timer: 1500
-      })
-      BooksAPI.getAll().then(
+  search = (query) =>{
+      BooksAPI.search(query).then(
         success => {
-          this.setState({
-            books: success
-          })
+          if (Array.isArray(success)=== true) {
+            this.setState({queryBooks: success})
+          }else{
+            this.setState({queryBooks: []})
+          }
         }
       )
-    }
-  )
-};
+    
+  };
+
+  changeShelf = (book, shelf) =>{
+    BooksAPI.update(book, shelf).then(
+      update => {
+        swal({
+        position: 'bottom-end',
+        type: 'success',
+        title: 'Livro movido com sucesso!',
+        showConfirmButton: false,
+        timer: 1500
+        })
+        BooksAPI.getAll().then(
+          success => {
+            this.setState({
+              books: success
+            })
+          }
+        )
+      }
+    )
+  };
+
+  clear = () => {
+    setTimeout(()=>{
+      this.setState ({
+        queryBooks: []
+      })
+    },500)
+  }
 
   render() {
     return (
@@ -68,7 +72,7 @@ changeShelf = (book, shelf) =>{
         <div className="app">
           <Switch>
             <Route exact path='/' render={(props) => <ListBooks {...props} books={this.state.books} changeShelf={this.changeShelf}/>} />
-            <Route path='/search' render={(props) => <Search {...props} search={this.search} changeShelf={this.changeShelf} queryBooks={this.state.queryBooks}/>}/>         
+            <Route path='/search' render={(props) => <Search {...props} clear={this.clear} search={this.search} changeShelf={this.changeShelf} queryBooks={this.state.queryBooks}/>}/>         
             <Redirect from='*' to='/'/>
           </Switch>
         </div>
