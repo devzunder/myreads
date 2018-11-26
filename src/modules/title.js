@@ -1,5 +1,6 @@
 import React from 'react';
 
+//function stateless component
 const Title = props => {
     return(
         <div className="list-books-title">
