@@ -37,8 +37,6 @@ export default class BooksApp extends Component {
           }
         }
       )
-    }else{
-      this.setState({queryBooks: []})
     }
   };
   //função de troca de estantes
