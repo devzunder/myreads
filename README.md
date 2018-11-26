@@ -40,3 +40,8 @@ Exibindo avisos de acordo com as respostas.
     ├── index.css 
     └── index.js 
 ```
+
+
+#Fontes
+
+    Para este projeto contei muito com a ajuda desse [artigo](https://medium.com/@programadriano/javascript-conhecendo-map-filter-e-reduce-ce072d8f0ec5) sensacional relacionado a map, filter e reduce 
