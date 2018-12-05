@@ -79,7 +79,6 @@ export default class BooksApp extends Component {
             <Route path='/search' render={(props) => <Search {...props} changeShelf={this.changeShelf} books={this.state.storedBooks} checkShelf={this.checkShelf}/>}/>         
             <Redirect from='*' to='/'/>
           </Switch>
-          {console.log(this.state)}
         </div>
       </BrowserRouter>
     )
