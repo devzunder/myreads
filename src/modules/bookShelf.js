@@ -1,20 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Book from './book';
 
-export default class BookShelf extends Component{
-
-    render(){
-        const book = this.props.book;    
-        return(
-            <div className="bookshelf">
-            <h2 className="bookshelf-title">{this.props.bookShelfTitle}</h2>
+//alteração para stateless component
+const BookShelf = ({book, bookShelfTitle, changeShelf}) =>{   
+    return(
+        <div className="bookshelf">
+            <h2 className="bookshelf-title">{bookShelfTitle}</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {book.map( book  =>( 
-                        <Book book={book} key={book.id} changeShelf={this.props.changeShelf}/>))} 
+                        <Book book={book} key={book.id} changeShelf={changeShelf}/>))} 
                     </ol>
                 </div>
-            </div>
-        )
-    }
+        </div>
+    )
 };
+
+export default BookShelf;

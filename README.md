@@ -10,6 +10,18 @@ Consiste basicamete em uma estante de livros em que o usuário consegue realizar
 Permitindo o usuário adicionar e/ou mover livros entre três estantes : Currently reading, read e want to read.
 Exibindo avisos de acordo com as respostas.
 
+## Como instalar e executar
+
+Em um terminal com Git instalado, basta executar os seguintes comandos: 
+
+```bash
+git clone https://github.com/devzunder/myreads.git
+cd myreads
+npm install
+npm start
+```
+
+O projeto fica disponível por padrão em http://localhost:3000/
 
 ## Estrutura do projeto
 

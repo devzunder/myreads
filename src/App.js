@@ -12,33 +12,19 @@ import './App.css';
 export default class BooksApp extends Component {
 
   state = { //estado da aplicação
-    queryBooks : [],
-    books:[]
+    storedBooks:[]
   }
 
   componentDidMount(){
     BooksAPI.getAll().then( //função de pegar os livros da memória, ligada na função de ciclo de vida componentDidMount
       success => {
         this.setState({
-          books: success
+          storedBooks: success
         })
       }
     )
   };
-  //Função de busca 
-  search = (query) =>{
-    if (query) { //verifica se existe query
-      BooksAPI.search(query).then( //chama a função search de dentro de BooksAPI
-        success => { // recebe o sucesso da promisse 
-          if (Array.isArray(success)=== true) { //verifica a promisse retorna um array
-            this.setState({queryBooks: success}) 
-          }else{
-            this.setState({queryBooks: []})
-          }
-        }
-      )
-    }
-  };
+
   //função de troca de estantes
   changeShelf = (book, shelf) =>{
     BooksAPI.update(book, shelf).then( //chama a função update de BooksAPI
@@ -63,7 +49,7 @@ export default class BooksApp extends Component {
         BooksAPI.getAll().then( //função que chama todos os livros da memória getALL de BooksAPI
           success => {
             this.setState({
-              books: success
+              storedBooks: success
             })
           }
         )
@@ -71,12 +57,17 @@ export default class BooksApp extends Component {
     )
   };
 
-  clear = () => { //função para limpar a pesquisa caso restem dados que retornem devido a delay em conexões. 
-    setTimeout(()=>{
-      this.setState ({
-        queryBooks: []
-      })
-    },500)
+  checkShelf = (books) => {
+    for (let book of books) {
+      for (let storedBook of this.state.storedBooks) {
+        if (storedBook.id === book.id  ) {
+          book.shelf = storedBook.shelf
+        }
+        if(!book.shelf) {
+          book.shelf = "none"
+        }
+      }
+    }
   }
 
   render() {
@@ -84,8 +75,8 @@ export default class BooksApp extends Component {
     <BrowserRouter>
         <div className="app">
           <Switch>
-            <Route exact path='/' render={(props) => <ListBooks {...props} books={this.state.books} changeShelf={this.changeShelf}/>} />
-            <Route path='/search' render={(props) => <Search {...props} clear={this.clear} search={this.search} changeShelf={this.changeShelf} queryBooks={this.state.queryBooks}/>}/>         
+            <Route exact path='/' render={(props) => <ListBooks {...props} books={this.state.storedBooks} changeShelf={this.changeShelf}/>} />
+            <Route path='/search' render={(props) => <Search {...props} changeShelf={this.changeShelf} books={this.state.storedBooks} checkShelf={this.checkShelf}/>}/>         
             <Redirect from='*' to='/'/>
           </Switch>
           {console.log(this.state)}
