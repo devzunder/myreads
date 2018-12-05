@@ -56,7 +56,7 @@ export default class BooksApp extends Component {
       }
     )
   };
-
+  // Função que checa a estante dos livros nos resultados das buscas
   checkShelf = (books) => {
     for (let book of books) {
       for (let storedBook of this.state.storedBooks) {
