@@ -57,7 +57,6 @@ export default class Search extends Component {
             <Book book={book} key={book.id} changeShelf={changeShelf}  />))}
           </ol>
         </div>
-        {console.log(this.state.queryBooks)}
       </div>
     )
     }
